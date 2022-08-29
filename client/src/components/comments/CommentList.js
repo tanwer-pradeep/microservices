@@ -13,7 +13,7 @@ const CommentList = ({ postID }) => {
 
   useEffect(() => {
     fetchAllComments(postID);
-  });
+  },[postID]);
 
   return comments?.length
     ? comments?.map((comment) => (
