@@ -9,7 +9,8 @@ const PostList = () => {
   const [postListArray, setPostListArray] = useState([]);
 
   const getPosts = async () => {
-    const response = await AxiosGet("http://localhost:3001/posts");
+    const response = await AxiosGet("http://localhost:3003/posts");
+    console.log(response, "!!!!!!!!!!!!!!");
     setPostList(response);
   };
 
@@ -38,7 +39,7 @@ const PostList = () => {
         >
           <h1>{post.title}</h1>
           <div>
-            <CommentList postID={post.postID} />
+            <CommentList comments={post.comments} />
           </div>
 
           <CommentCreate postID={post.postID} />
