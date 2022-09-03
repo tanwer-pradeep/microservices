@@ -3,15 +3,14 @@ const { randomBytes } = require("crypto");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const axios = require("axios");
-// const p = require("./connect");
-// const posts = require('./posts')
+const p = require("./connect");
+const posts = require('./posts')
 // import main from "./connect";
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 const postss = {};
-// p.main()
 app.post("/posts", async (req, res) => {
   const postID = randomBytes(4).toString("hex");
   const { title } = req.body;
@@ -20,19 +19,18 @@ app.post("/posts", async (req, res) => {
     postID,
     title,
   };
-  // try {
-  //   posts.posts.create({
-  //     postID:{
-  //       postID,
-  //       title// String is shorthand for {type: String}
-  
-  //   }
-  //   })
+  try {
+    posts.posts.create({
+      postID:{
+        postID,
+        title 
+      }
+    })
     
-  // } catch (error) {
-  //   console.log("error post")
+  } catch (error) {
+    console.log("error post")
     
-  // }
+  }
 
   // requesting to events services
   await axios.post("http://localhost:4001/events", {
@@ -56,4 +54,5 @@ app.get("/posts", (req, res) => {
 
 app.listen(3001, () => {
   console.log("posts service is runing on 3001");
+  p.main()
 });
