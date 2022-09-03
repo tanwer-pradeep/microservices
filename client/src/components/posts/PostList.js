@@ -10,7 +10,6 @@ const PostList = () => {
 
   const getPosts = async () => {
     const response = await AxiosGet("http://localhost:3003/posts");
-    console.log(response, "!!!!!!!!!!!!!!");
     setPostList(response);
   };
 

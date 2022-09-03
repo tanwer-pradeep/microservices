@@ -8,6 +8,8 @@ app.use(bodyParser.json());
 app.post("/events", (req, resp) => {
   const events = req.body;
 
+  console.log(events.type, 'from event bus')
+
   // for posts services
   axios.post("http://localhost:3001/events", events).catch((err) => {
     console.log("error from posts services", err);
@@ -18,6 +20,10 @@ app.post("/events", (req, resp) => {
   });
   // for  query service
   axios.post("http://localhost:3003/events", events).catch((err) => {
+    console.log("error from event bus", err);
+  });
+  //for comment moderation
+  axios.post("http://localhost:4002/events", events).catch((err) => {
     console.log("error from event bus", err);
   });
 

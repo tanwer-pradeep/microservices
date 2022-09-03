@@ -31,27 +31,37 @@ const postsList = {};
 // }
 
 app.get('/posts', (req, res) =>{
-    res.send(postsList)
+    res.send(postsList);
 })
 
 app.post('/events', (req, res) =>{
     const {type, data} = req.body;
     console.log('from query event', type, data);
-    const {postID} = data;
+    const {postID, id, content, status, title} = data;
 
     switch(type){
         case ("PostCreated"):
         // work here for post creation
-            const { title } = data;
+            console.log('from postCreated', id, postID,content, status, title)
             postsList[postID] = {postID, title, comments: []}
             break;
         case ("CommentCreated"):
         // work here for comment creation
-        const { id, content} = data;
-            postsList[postID].comments.push({id, content})
+            console.log('from commentCreated', id, postID,content, status, title)
+            postsList[postID].comments.push({id, content, status})
+            break;
+        case ("CommentUpdated"):
+        // work here for comment status update
+            console.log('from commentUpdated', id, postID,content, status, postsList)
+            
+            const post = postsList[postID]
+            const comment = post.comments.find(comment =>{
+                return comment.id === id;
+            });
+            comment.status = status;
+            comment.content = content;
             break;
     }
-
     res.send('OK');
 })
 
