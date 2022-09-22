@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { AxiosPost } from '../../utils/Axios';
 
 const PostCreate = () => {
-const [title, setTitle] = useState('')
+const [title, setTitle] = useState('');
 
   const onFinish = async(values) => {
     console.log("Success:", values);
     const res = await AxiosPost('http://localhost:3001/posts', {"title": title});
-    if(res.status === 201) setTitle('');
+    if(res.status === 201){
+      setTitle('');
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
