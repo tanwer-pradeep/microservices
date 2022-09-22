@@ -6,7 +6,6 @@ const App = () => {
   return (
     <>
     <center>
-
       <h2>MicroServices Post create App</h2>
       <PostCreate />
       <PostList />

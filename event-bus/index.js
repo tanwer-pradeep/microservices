@@ -5,9 +5,11 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
+const allOccuredEvents = [];
+
 app.post("/events", (req, resp) => {
   const events = req.body;
-
+  allOccuredEvents.push(events);
   console.log(events.type, 'from event bus')
 
   // for posts services
@@ -29,6 +31,10 @@ app.post("/events", (req, resp) => {
 
   resp.send({status: 'OK'})
 });
+
+app.get('/events', (req, res) =>{
+  res.send(allOccuredEvents);
+})
 
 app.listen(4001, () =>{
     console.log('event bus listining at 4001')

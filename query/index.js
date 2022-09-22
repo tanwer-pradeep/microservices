@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 
 
 const app = express();
@@ -30,13 +31,7 @@ const postsList = {};
 //     }
 // }
 
-app.get('/posts', (req, res) =>{
-    res.send(postsList);
-})
-
-app.post('/events', (req, res) =>{
-    const {type, data} = req.body;
-    console.log('from query event', type, data);
+const handleEvent = (type, data) =>{
     const {postID, id, content, status, title} = data;
 
     switch(type){
@@ -62,12 +57,27 @@ app.post('/events', (req, res) =>{
             comment.content = content;
             break;
     }
+}
+
+app.get('/posts', (req, res) =>{
+    res.send(postsList);
+})
+
+app.post('/events', (req, res) =>{
+    const {type, data} = req.body;
+    console.log('from query event', type, data);
+    
+    handleEvent(type, data);
     res.send('OK');
 })
 
-
-
-
-app.listen(3003, () =>{
+app.listen(3003, async() =>{
     console.log('query service is runnig on 3003');
+
+    const res = await axios.get('http://localhost:4001/events');
+    console.log(res.data);
+    res?.data?.forEach(event =>{
+        handleEvent(event.type, event.data);
+    })
+
 })

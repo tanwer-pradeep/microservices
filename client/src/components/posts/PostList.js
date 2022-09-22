@@ -36,7 +36,7 @@ const PostList = () => {
           key={post.postID}
           style={{ width: "400px", height: "300px", margin: "5px" }}
         >
-          <h1>{post.title}</h1>
+          <h3>{post.title}</h3>
           <div>
             <CommentList comments={post.comments} />
           </div>
